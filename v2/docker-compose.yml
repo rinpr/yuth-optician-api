@@ -1,0 +1,40 @@
+services:
+  # fiber:
+  #   image: golang:1.23.4-alpine
+  #   container_name: yuth-optician-api
+  #   volumes:
+  #     - .:/go/src/v2
+  #   working_dir: /go/src/v2
+  #   command: sleep 7200
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: yuth-optician-postgresql
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ../data:/var/lib/postgresql/data
+    ports:
+      - 2345:5432
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: yuth-optician-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 5050:80
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+# volumes:
+#   postgres_data:
