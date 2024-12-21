@@ -22,30 +22,6 @@ func main() {
 
 	r := router.NewRouter(db)
 	r.Listen(":8080")
-
-
-	// book := models.GetBook(db, 1)
-	// fmt.Println(book)
-
-	// book.Price = 9999
-	// models.UpdateBook(db, book)
-
-	// models.DeleteBook(db, 1)
-
-	// models.CreateBook(db, &models.Book{
-	// 	Name: "7 Habits of highly effective people",
-	// 	Author: "Stephen R. Covy",
-	// 	Publisher: "dmb Books",
-	// 	Description: "",
-	// 	Price: 899,
-	// })
-
-
-	// currentBook := models.SearchBook(db, "7 Habits of highly effective people")
-	// for _, v := range currentBook {
-	// 	fmt.Println(v.ID, v.Name, v.Author, v.Price)
-	// }
-	// fmt.Println(currentBook)
 }
 
 func loadENV() {
@@ -94,4 +70,29 @@ func initDB() *gorm.DB {
 	db.AutoMigrate(&models.Book{}, models.User{})
 	fmt.Println("Database migration completed!")
 	return db
+}
+
+func sampleQueries(db *gorm.DB) {
+	book := models.GetBook(db, 1)
+	fmt.Println(book)
+
+	book.Price = 9999
+	models.UpdateBook(db, book)
+
+	models.DeleteBook(db, 1)
+
+	models.CreateBook(db, &models.Book{
+		Name: "7 Habits of highly effective people",
+		Author: "Stephen R. Covy",
+		Publisher: "dmb Books",
+		Description: "",
+		Price: 899,
+	})
+
+
+	currentBook := models.SearchBook(db, "7 Habits of highly effective people")
+	for _, v := range currentBook {
+		fmt.Println(v.ID, v.Name, v.Author, v.Price)
+	}
+	fmt.Println(currentBook)
 }
